@@ -4,20 +4,44 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Todo;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class TodoController extends Controller
 {
+    use AuthorizesRequests;
+
     public function __construct()
     {
-        // $this->middleware(['auth']);
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $todos = auth()->user()->todos()->latest()->get();
+        $query = auth()->user()->todos()->latest();
+
+        // Apply status filter if provided
+        if ($request->has('status') && in_array($request->status, Todo::STATUSES)) {
+            $query->where('status', $request->status);
+        }
+
+        // Apply date filter if provided
+        if ($request->has('date_filter')) {
+            switch ($request->date_filter) {
+                case 'today':
+                    $query->dueToday();
+                    break;
+                case 'overdue':
+                    $query->overdue();
+                    break;
+                case 'upcoming':
+                    $query->upcoming();
+                    break;
+            }
+        }
+
+        $todos = $query->get();
         return view('todos.index', compact('todos'));
     }
 
@@ -38,7 +62,7 @@ class TodoController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'due_date' => 'nullable|date',
-            'status' => 'required|in:pending,in_progress,completed'
+            'status' => 'required|in:' . implode(',', Todo::STATUSES)
         ]);
 
         auth()->user()->todos()->create($validated);
@@ -75,7 +99,7 @@ class TodoController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'due_date' => 'nullable|date',
-            'status' => 'required|in:pending,in_progress,completed'
+            'status' => 'required|in:' . implode(',', Todo::STATUSES)
         ]);
 
         $todo->update($validated);
