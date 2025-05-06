@@ -12,6 +12,7 @@ class TodoController extends Controller
 
     public function __construct()
     {
+        // $this->middleware(['auth']);
     }
 
     /**
@@ -41,7 +42,19 @@ class TodoController extends Controller
             }
         }
 
-        $todos = $query->get();
+        // Apply search if provided
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        // Get paginated results
+        $perPage = $request->get('per_page', 10);
+        $todos = $query->paginate($perPage)->withQueryString();
+
         return view('todos.index', compact('todos'));
     }
 
