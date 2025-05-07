@@ -2,10 +2,12 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches-ignore: 
+    branches:
       - main
+      - develop
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
   workflow_dispatch:
   
 jobs:
