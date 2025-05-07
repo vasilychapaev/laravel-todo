@@ -78,9 +78,9 @@ jobs:
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --optimize-autoloader --no-dev
 
-    - name: Generate key
-      run: php artisan key:generate
-
+    - name: Copy .env
+      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+  
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
 
@@ -92,7 +92,7 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: ${{ secrets.SSH_PORT }}
         script: |
-          cd /www/wwwroot/todo.pupupu.my
+          cd /var/www/html
           git pull origin main
           composer install --no-dev --optimize-autoloader
           php artisan migrate --force
