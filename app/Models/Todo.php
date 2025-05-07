@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Todo
- * @package App\Models
  *
  * @property int $id
  * @property string $title
@@ -30,7 +29,9 @@ class Todo extends Model
      * Todo status constants
      */
     public const STATUS_PENDING = 'pending';
+
     public const STATUS_IN_PROGRESS = 'in_progress';
+
     public const STATUS_COMPLETED = 'completed';
 
     /**
@@ -52,7 +53,7 @@ class Todo extends Model
         'description',
         'due_date',
         'status',
-        'user_id'
+        'user_id',
     ];
 
     /**
@@ -76,9 +77,6 @@ class Todo extends Model
 
     /**
      * Scope a query to only include pending todos.
-     *
-     * @param Builder $query
-     * @return Builder
      */
     public function scopePending(Builder $query): Builder
     {
@@ -87,9 +85,6 @@ class Todo extends Model
 
     /**
      * Scope a query to only include in-progress todos.
-     *
-     * @param Builder $query
-     * @return Builder
      */
     public function scopeInProgress(Builder $query): Builder
     {
@@ -98,9 +93,6 @@ class Todo extends Model
 
     /**
      * Scope a query to only include completed todos.
-     *
-     * @param Builder $query
-     * @return Builder
      */
     public function scopeCompleted(Builder $query): Builder
     {
@@ -109,9 +101,6 @@ class Todo extends Model
 
     /**
      * Scope a query to only include todos due today.
-     *
-     * @param Builder $query
-     * @return Builder
      */
     public function scopeDueToday(Builder $query): Builder
     {
@@ -120,9 +109,6 @@ class Todo extends Model
 
     /**
      * Scope a query to only include overdue todos.
-     *
-     * @param Builder $query
-     * @return Builder
      */
     public function scopeOverdue(Builder $query): Builder
     {
@@ -132,9 +118,6 @@ class Todo extends Model
 
     /**
      * Scope a query to only include upcoming todos.
-     *
-     * @param Builder $query
-     * @return Builder
      */
     public function scopeUpcoming(Builder $query): Builder
     {

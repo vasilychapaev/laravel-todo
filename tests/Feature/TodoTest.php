@@ -12,18 +12,19 @@ class TodoTest extends TestCase
     use RefreshDatabase;
 
     private User $user;
+
     private array $todoData;
 
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->user = User::factory()->create();
         $this->todoData = [
             'title' => 'Test Todo',
             'description' => 'Test Description',
             'due_date' => now()->addDay()->format('Y-m-d\TH:i'),
-            'status' => 'pending'
+            'status' => 'pending',
         ];
     }
 
@@ -89,19 +90,19 @@ class TodoTest extends TestCase
         $todayTodo = Todo::factory()->create([
             'user_id' => $this->user->id,
             'due_date' => now(),
-            'status' => Todo::STATUS_PENDING
+            'status' => Todo::STATUS_PENDING,
         ]);
 
         $overdueTodo = Todo::factory()->create([
             'user_id' => $this->user->id,
             'due_date' => now()->subDay(),
-            'status' => Todo::STATUS_PENDING
+            'status' => Todo::STATUS_PENDING,
         ]);
 
         $upcomingTodo = Todo::factory()->create([
             'user_id' => $this->user->id,
             'due_date' => now()->addDay(),
-            'status' => Todo::STATUS_PENDING
+            'status' => Todo::STATUS_PENDING,
         ]);
 
         // Test today filter
@@ -149,7 +150,7 @@ class TodoTest extends TestCase
         $this->assertDatabaseHas('todos', [
             'title' => $this->todoData['title'],
             'description' => $this->todoData['description'],
-            'user_id' => $this->user->id
+            'user_id' => $this->user->id,
         ]);
     }
 
@@ -157,7 +158,7 @@ class TodoTest extends TestCase
     {
         $invalidData = [
             'title' => '', // Empty title
-            'status' => 'invalid_status' // Invalid status
+            'status' => 'invalid_status', // Invalid status
         ];
 
         $response = $this->actingAs($this->user)
@@ -174,7 +175,7 @@ class TodoTest extends TestCase
             'title' => 'Updated Todo',
             'description' => 'Updated Description',
             'due_date' => now()->addDays(2)->format('Y-m-d\TH:i'),
-            'status' => 'in_progress'
+            'status' => 'in_progress',
         ];
 
         $response = $this->actingAs($this->user)
@@ -186,7 +187,7 @@ class TodoTest extends TestCase
         $this->assertDatabaseHas('todos', [
             'id' => $todo->id,
             'title' => $updatedData['title'],
-            'description' => $updatedData['description']
+            'description' => $updatedData['description'],
         ]);
     }
 
@@ -203,7 +204,7 @@ class TodoTest extends TestCase
         $todo = Todo::factory()->create(['user_id' => $this->user->id]);
         $invalidData = [
             'title' => '', // Empty title
-            'status' => 'invalid_status' // Invalid status
+            'status' => 'invalid_status', // Invalid status
         ];
 
         $response = $this->actingAs($this->user)
@@ -272,7 +273,7 @@ class TodoTest extends TestCase
         $response = $this->actingAs($this->user)
             ->post(route('todos.store'), [
                 'title' => '', // Empty title should fail
-                'status' => 'invalid_status' // Invalid status should fail
+                'status' => 'invalid_status', // Invalid status should fail
             ]);
 
         $response->assertSessionHasErrors(['title', 'status']);
@@ -285,7 +286,7 @@ class TodoTest extends TestCase
         $pendingTodo = Todo::factory()->pending()->create(['user_id' => $this->user->id]);
         $inProgressTodo = Todo::factory()->inProgress()->create(['user_id' => $this->user->id]);
         $completedTodo = Todo::factory()->completed()->create(['user_id' => $this->user->id]);
-        
+
         // Test status scopes
         $this->assertEquals(1, Todo::pending()->count());
         $this->assertEquals(1, Todo::inProgress()->count());
@@ -295,19 +296,19 @@ class TodoTest extends TestCase
         $todayTodo = Todo::factory()->create([
             'user_id' => $this->user->id,
             'due_date' => now(),
-            'status' => Todo::STATUS_PENDING
+            'status' => Todo::STATUS_PENDING,
         ]);
 
         $overdueTodo = Todo::factory()->create([
             'user_id' => $this->user->id,
             'due_date' => now()->subDay(),
-            'status' => Todo::STATUS_PENDING
+            'status' => Todo::STATUS_PENDING,
         ]);
 
         $upcomingTodo = Todo::factory()->create([
             'user_id' => $this->user->id,
             'due_date' => now()->addDay(),
-            'status' => Todo::STATUS_PENDING
+            'status' => Todo::STATUS_PENDING,
         ]);
 
         // Test date scopes
