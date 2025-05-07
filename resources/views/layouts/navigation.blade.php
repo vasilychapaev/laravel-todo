@@ -16,7 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('todos.index')" :active="request()->routeIs('todos.*')">
-                        {{ __('Todos') }}!
+                        {{ __('Todos') }}!+
                     </x-nav-link>
                 </div>
             </div>
