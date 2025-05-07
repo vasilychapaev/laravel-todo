@@ -89,7 +89,7 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: ${{ secrets.SSH_PORT }}
         script: |
-          cd /www/wwwroot/todo.pupupu.my/site
+          cd /www/wwwroot/todo.pupupu.my
           git pull origin main
           composer install --no-dev --optimize-autoloader
           php artisan migrate --force
