@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Todo;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
 
 class TodoController extends Controller
 {
@@ -45,9 +45,9 @@ class TodoController extends Controller
         // Apply search if provided
         if ($request->has('search')) {
             $search = $request->search;
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%");
+                    ->orWhere('description', 'like', "%{$search}%");
             });
         }
 
@@ -75,7 +75,7 @@ class TodoController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'due_date' => 'nullable|date',
-            'status' => 'required|in:' . implode(',', Todo::STATUSES)
+            'status' => 'required|in:'.implode(',', Todo::STATUSES),
         ]);
 
         auth()->user()->todos()->create($validated);
@@ -98,6 +98,7 @@ class TodoController extends Controller
     public function edit(Todo $todo)
     {
         $this->authorize('update', $todo);
+
         return view('todos.edit', compact('todo'));
     }
 
@@ -112,7 +113,7 @@ class TodoController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'due_date' => 'nullable|date',
-            'status' => 'required|in:' . implode(',', Todo::STATUSES)
+            'status' => 'required|in:'.implode(',', Todo::STATUSES),
         ]);
 
         $todo->update($validated);
