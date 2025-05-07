@@ -49,19 +49,53 @@ alwaysApply: false
 - [x] Add sorting and filtering options
 
 ## 6. Testing
-- [ ] Write feature tests for Todo CRUD
-- [ ] Write unit tests for Todo model
-- [ ] Test authorization policies
-- [ ] Test form validation
+- [x] Write feature tests for Todo CRUD
+- [x] Write unit tests for Todo model
+- [x] Test authorization policies
+- [x] Test form validation
+- [x] Test filtering and sorting functionality
 
 ## 7. Polish & Optimization
 - [x] Add form validation
 - [x] Implement flash messages
 - [x] Add loading states
 - [ ] Optimize database queries
+  - [ ] Add indexes for frequently queried columns
+  - [ ] Implement eager loading for relationships
+  - [ ] Cache frequently accessed data
 - [ ] Add pagination for todo list
+  - [ ] Implement pagination in controller
+  - [ ] Add pagination UI
+  - [ ] Add page size selection
+- [ ] Add search functionality
+  - [ ] Implement search by title and description
+  - [ ] Add search UI
+  - [ ] Add search filters
 
 ## 8. Documentation
 - [ ] Add README.md with setup instructions
+  - [ ] Add project overview
+  - [ ] Add installation steps
+  - [ ] Add development setup guide
 - [ ] Document API endpoints
+  - [ ] Add API documentation
+  - [ ] Add request/response examples
+  - [ ] Add authentication requirements
 - [ ] Add inline code documentation
+  - [ ] Add PHPDoc blocks
+  - [ ] Add method descriptions
+  - [ ] Add class descriptions
+
+## 9. Additional Features
+- [ ] Add todo categories/tags
+  - [ ] Create category model and migration
+  - [ ] Add category management
+  - [ ] Add category filtering
+- [ ] Add todo priorities
+  - [ ] Add priority field
+  - [ ] Add priority filtering
+  - [ ] Add priority sorting
+- [ ] Add todo reminders
+  - [ ] Add reminder field
+  - [ ] Add email notifications
+  - [ ] Add reminder management
