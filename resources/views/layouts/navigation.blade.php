@@ -16,7 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('todos.index')" :active="request()->routeIs('todos.*')">
-                        {{ __('Todos') }}!+
+                        <span class="uppercase">{{ __('Todos') }} :) </span>
                     </x-nav-link>
                 </div>
             </div>
@@ -74,7 +74,7 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('todos.index')" :active="request()->routeIs('todos.*')">
-                {{ __('Todos') }}
+                <span class="uppercase">{{ __('Todos') }}!+</span>
             </x-responsive-nav-link>
         </div>
 
